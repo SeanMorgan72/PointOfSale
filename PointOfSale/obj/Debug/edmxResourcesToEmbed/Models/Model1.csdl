@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PointOfSaleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Batch">
+    <Key>
+      <PropertyRef Name="BatchId" />
+    </Key>
+    <Property Name="BatchId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Batchname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ProductStocks" Relationship="Self.FK_ProductStock_Batch" FromRole="Batch" ToRole="ProductStock" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <NavigationProperty Name="Products" Relationship="Self.FK_Product_Category1" FromRole="Category" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryId" Type="Int32" />
+    <Property Name="Status" Type="Int32" />
+    <NavigationProperty Name="Category" Relationship="Self.FK_Product_Category1" FromRole="Product" ToRole="Category" />
+    <NavigationProperty Name="ProductStocks" Relationship="Self.FK_ProductStock_Product" FromRole="Product" ToRole="ProductStock" />
+    <NavigationProperty Name="SalesDetails" Relationship="Self.FK_SalesDetail_Product1" FromRole="Product" ToRole="SalesDetail" />
+  </EntityType>
+  <EntityType Name="ProductStock">
+    <Key>
+      <PropertyRef Name="ProductQtyId" />
+    </Key>
+    <Property Name="ProductQtyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="BatchId" Type="Int32" />
+    <Property Name="PurchasePrice" Type="Decimal" Precision="7" Scale="2" />
+    <Property Name="SalesPrice" Type="Decimal" Precision="7" Scale="2" />
+    <NavigationProperty Name="Batch" Relationship="Self.FK_ProductStock_Batch" FromRole="ProductStock" ToRole="Batch" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_ProductStock_Product" FromRole="ProductStock" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="RolePermission">
+    <Key>
+      <PropertyRef Name="RolePermissionId" />
+    </Key>
+    <Property Name="RolePermissionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Tag" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Sale">
+    <Key>
+      <PropertyRef Name="SalesId" />
+    </Key>
+    <Property Name="SalesId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderNo" Type="Int32" />
+    <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="OrderDate" Type="DateTime" Precision="0" />
+    <Property Name="PayMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TotalAmount" Type="Decimal" Precision="7" Scale="2" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="Subtotal" Type="Decimal" Precision="7" Scale="2" />
+    <Property Name="DiscountPercentage" Type="Int32" />
+    <Property Name="VatPercentage" Type="Int32" />
+    <NavigationProperty Name="SalesDetails" Relationship="Self.FK_SalesDetail_Sale" FromRole="Sale" ToRole="SalesDetail" />
+  </EntityType>
+  <EntityType Name="SalesDetail">
+    <Key>
+      <PropertyRef Name="SalesDetailId" />
+    </Key>
+    <Property Name="SalesDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SalesId" Type="Int32" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="UnitPrice" Type="Decimal" Precision="7" Scale="2" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="LineTotal" Type="Decimal" Precision="7" Scale="2" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="Int32" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_SalesDetail_Product1" FromRole="SalesDetail" ToRole="Product" />
+    <NavigationProperty Name="Sale" Relationship="Self.FK_SalesDetail_Sale" FromRole="SalesDetail" ToRole="Sale" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+  </EntityType>
+  <Association Name="FK_ProductStock_Batch">
+    <End Role="Batch" Type="Self.Batch" Multiplicity="0..1" />
+    <End Role="ProductStock" Type="Self.ProductStock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Batch">
+        <PropertyRef Name="BatchId" />
+      </Principal>
+      <Dependent Role="ProductStock">
+        <PropertyRef Name="BatchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Category1">
+    <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductStock_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="ProductStock" Type="Self.ProductStock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="ProductStock">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalesDetail_Product1">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="SalesDetail" Type="Self.SalesDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="SalesDetail">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalesDetail_Sale">
+    <End Role="Sale" Type="Self.Sale" Multiplicity="0..1" />
+    <End Role="SalesDetail" Type="Self.SalesDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sale">
+        <PropertyRef Name="SalesId" />
+      </Principal>
+      <Dependent Role="SalesDetail">
+        <PropertyRef Name="SalesId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PointOfSaleEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Batches" EntityType="Self.Batch" />
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="ProductStocks" EntityType="Self.ProductStock" />
+    <EntitySet Name="RolePermissions" EntityType="Self.RolePermission" />
+    <EntitySet Name="Sales" EntityType="Self.Sale" />
+    <EntitySet Name="SalesDetails" EntityType="Self.SalesDetail" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_ProductStock_Batch" Association="Self.FK_ProductStock_Batch">
+      <End Role="Batch" EntitySet="Batches" />
+      <End Role="ProductStock" EntitySet="ProductStocks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Category1" Association="Self.FK_Product_Category1">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductStock_Product" Association="Self.FK_ProductStock_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="ProductStock" EntitySet="ProductStocks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalesDetail_Product1" Association="Self.FK_SalesDetail_Product1">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="SalesDetail" EntitySet="SalesDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalesDetail_Sale" Association="Self.FK_SalesDetail_Sale">
+      <End Role="Sale" EntitySet="Sales" />
+      <End Role="SalesDetail" EntitySet="SalesDetails" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

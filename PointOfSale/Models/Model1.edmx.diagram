@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d197cfe213d94e86ac2a42a73fecfc06" Name="Diagram1">
+        <EntityTypeShape EntityType="PointOfSaleModel.Batch" Width="1.5" PointX="6.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PointOfSaleModel.Category" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PointOfSaleModel.Product" Width="1.5" PointX="2.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PointOfSaleModel.ProductStock" Width="1.5" PointX="4.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PointOfSaleModel.RolePermission" Width="1.5" PointX="0.5" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PointOfSaleModel.Sale" Width="1.5" PointX="4.625" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PointOfSaleModel.SalesDetail" Width="1.5" PointX="2.5" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PointOfSaleModel.sysdiagram" Width="1.5" PointX="0.5" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PointOfSaleModel.User" Width="1.5" PointX="6.625" PointY="2.375" IsExpanded="true" />
+        <AssociationConnector Association="PointOfSaleModel.FK_ProductStock_Batch" ManuallyRouted="false" />
+        <AssociationConnector Association="PointOfSaleModel.FK_Product_Category1" ManuallyRouted="false" />
+        <AssociationConnector Association="PointOfSaleModel.FK_ProductStock_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="PointOfSaleModel.FK_SalesDetail_Product1" ManuallyRouted="false" />
+        <AssociationConnector Association="PointOfSaleModel.FK_SalesDetail_Sale" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PointOfSaleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Batch">
+    <Key>
+      <PropertyRef Name="BatchId" />
+    </Key>
+    <Property Name="BatchId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Batchname" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="int" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="CategoryId" Type="int" />
+    <Property Name="Status" Type="int" />
+  </EntityType>
+  <EntityType Name="ProductStock">
+    <Key>
+      <PropertyRef Name="ProductQtyId" />
+    </Key>
+    <Property Name="ProductQtyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="BatchId" Type="int" />
+    <Property Name="PurchasePrice" Type="decimal" Precision="7" Scale="2" />
+    <Property Name="SalesPrice" Type="decimal" Precision="7" Scale="2" />
+  </EntityType>
+  <EntityType Name="RolePermission">
+    <Key>
+      <PropertyRef Name="RolePermissionId" />
+    </Key>
+    <Property Name="RolePermissionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Role" Type="nvarchar" MaxLength="50" />
+    <Property Name="Tag" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Sale">
+    <Key>
+      <PropertyRef Name="SalesId" />
+    </Key>
+    <Property Name="SalesId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderNo" Type="int" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="50" />
+    <Property Name="CustomerPhone" Type="nvarchar" MaxLength="50" />
+    <Property Name="CustomerAddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="OrderDate" Type="date" />
+    <Property Name="PayMethod" Type="nvarchar" MaxLength="50" />
+    <Property Name="TotalAmount" Type="decimal" Precision="7" Scale="2" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="date" />
+    <Property Name="Status" Type="int" />
+    <Property Name="Subtotal" Type="decimal" Precision="7" Scale="2" />
+    <Property Name="DiscountPercentage" Type="int" />
+    <Property Name="VatPercentage" Type="int" />
+  </EntityType>
+  <EntityType Name="SalesDetail">
+    <Key>
+      <PropertyRef Name="SalesDetailId" />
+    </Key>
+    <Property Name="SalesDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SalesId" Type="int" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="UnitPrice" Type="decimal" Precision="7" Scale="2" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="LineTotal" Type="decimal" Precision="7" Scale="2" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="Status" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" />
+    <Property Name="Role" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="int" />
+  </EntityType>
+  <Association Name="FK_Product_Category1">
+    <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductStock_Batch">
+    <End Role="Batch" Type="Self.Batch" Multiplicity="0..1" />
+    <End Role="ProductStock" Type="Self.ProductStock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Batch">
+        <PropertyRef Name="BatchId" />
+      </Principal>
+      <Dependent Role="ProductStock">
+        <PropertyRef Name="BatchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductStock_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="ProductStock" Type="Self.ProductStock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="ProductStock">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalesDetail_Product1">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="SalesDetail" Type="Self.SalesDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="SalesDetail">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalesDetail_Sale">
+    <End Role="Sale" Type="Self.Sale" Multiplicity="0..1" />
+    <End Role="SalesDetail" Type="Self.SalesDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sale">
+        <PropertyRef Name="SalesId" />
+      </Principal>
+      <Dependent Role="SalesDetail">
+        <PropertyRef Name="SalesId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PointOfSaleModelStoreContainer">
+    <EntitySet Name="Batch" EntityType="Self.Batch" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductStock" EntityType="Self.ProductStock" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RolePermission" EntityType="Self.RolePermission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sale" EntityType="Self.Sale" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SalesDetail" EntityType="Self.SalesDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Product_Category1" Association="Self.FK_Product_Category1">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductStock_Batch" Association="Self.FK_ProductStock_Batch">
+      <End Role="Batch" EntitySet="Batch" />
+      <End Role="ProductStock" EntitySet="ProductStock" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductStock_Product" Association="Self.FK_ProductStock_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="ProductStock" EntitySet="ProductStock" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalesDetail_Product1" Association="Self.FK_SalesDetail_Product1">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="SalesDetail" EntitySet="SalesDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalesDetail_Sale" Association="Self.FK_SalesDetail_Sale">
+      <End Role="Sale" EntitySet="Sale" />
+      <End Role="SalesDetail" EntitySet="SalesDetail" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
